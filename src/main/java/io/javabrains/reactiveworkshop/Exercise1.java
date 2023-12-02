@@ -1,6 +1,6 @@
 package io.javabrains.reactiveworkshop;
 
-import javax.xml.transform.stream.StreamSource;
+
 
 public class Exercise1 {
 
@@ -23,15 +23,25 @@ public class Exercise1 {
         System.out.println("Print the first number in intNumbersStream that's greater than 5.");
         //  If nothing is found, print -1
         // TODO: Write code here
-        StreamSources.intNumbersStream().filter(e -> e>5).forEach(System.out::println);
+        Integer value = StreamSources.intNumbersStream().filter(e -> e>5).findFirst().orElse(-1);
+        System.out.println(value);
+
 
         System.out.println("Print first names of all users in userStream");
         // TODO: Write code here
-        StreamSources.userStream().forEach(User::getFirstName);
+        StreamSources.userStream().map(user -> user.getFirstName()).forEach(firstName -> System.out.println(firstName));
 
         System.out.println("Print first names in userStream for users that have IDs from number stream");
         // TODO: Write code here
-        StreamSources.userStream().filter(user -> StreamSources.intNumbersStream().anyMatch(e -> e==user.getId())).forEach(System.out::println);
+        //using anyMatch()
+        StreamSources.userStream()
+            .filter(user -> StreamSources.intNumbersStream().anyMatch(e -> e==user.getId()))
+            .map(User::getFirstName).forEach(System.out::println);
+        //using flatMap
+        // StreamSources.intNumbersStream()
+        // .flatMap((id -> StreamSources.userStream().filter(user -> user.getId() == id)))
+        // .map(user -> user.getFirstName())
+        // .forEach(System.out::println);
 
     }
 
