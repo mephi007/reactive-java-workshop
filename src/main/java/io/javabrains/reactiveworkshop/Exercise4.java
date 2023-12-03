@@ -11,12 +11,17 @@ public class Exercise4 {
 
         System.out.println("Print the value from intNumberMono when it emits");
         // TODO: Write code here
-        ReactiveSources.intNumberMono().subscribe(e -> System.out.println(e));
-        //blocking
-        Optional<Integer> number = ReactiveSources.intNumberMono().blockOptional();
-        System.out.println(number.get());
-        // Get the value from the Mono into an integer variable
+        ReactiveSources.intNumberMono().subscribe(
+            num -> System.out.println(num),
+            err -> System.out.println(err.getMessage()),
+            () -> System.out.println("complete")
+        );
+        
+        System.out.println("Get the value from the Mono into an integer variable");
         // TODO: Write code here
+        //blocking
+        // Optional<Integer> number = ReactiveSources.intNumberMono().blockOptional();
+        // System.out.println(number.get());
 
         System.out.println("Press a key to end");
         System.in.read();
