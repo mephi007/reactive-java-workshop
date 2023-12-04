@@ -1,7 +1,7 @@
 package io.javabrains.reactiveworkshop;
 
 import java.io.IOException;
-import java.util.concurrent.Flow.Subscription;
+import org.reactivestreams.Subscription;
 
 import reactor.core.publisher.BaseSubscriber;
 
@@ -33,12 +33,13 @@ public class Exercise5 {
 
 class MySubscriber<T> extends BaseSubscriber<T>{
     
-    protected void hookOnSubscribe(Subscription subscription){
+    public void hookOnSubscribe(Subscription subscription){
         System.out.println("Subscribe happened");
-        // request(2);
+        request(2);
     }
 
     public void hookOnNext(T value){
         System.out.println(value.toString() + " received");
+        request(2);
     }
 }
